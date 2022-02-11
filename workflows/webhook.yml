@@ -1,0 +1,5 @@
+sources:
+  - run: return [ctx.env.event]
+    force: true
+steps: 
+  - run: console.log("item",ctx.item);

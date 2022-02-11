@@ -1,0 +1,17 @@
+name: Webhook
+on:
+  repository_dispatch:
+  workflow_dispatch:
+jobs:
+  denoflow:
+    runs-on: ubuntu-latest
+    concurrency: denoflow
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v2
+      - uses: denoland/setup-deno@v1
+        with:
+          deno-version: v1.x
+      - env:
+          event: ${{toJSON(github.event)}}
+        run: deno run --allow-read --allow-net --allow-write --allow-env --allow-run https://deno.land/x/denoflow/cli.ts run workflows/webhook.yml
